@@ -524,66 +524,66 @@ function tipsdetail(obj){
 }
 
 function mainVideos(){
-	var requestTips = window.indexedDB.open("isaac", 1);
-	requestTips.onsuccess = function(e) {
-		var dbTips = this.result;
-		var objectStoreTips = dbTips.transaction("gentable").objectStore("gentable");
-		var tipsData = new Object();
-		var tipsArray = [];
+	var request = window.indexedDB.open("isaac", 1);
+	request.onsuccess = function(e) {
+		var db = this.result;
+		var objectStore = dbTips.transaction("gentable").objectStore("gentable");
+		var videoData = new Object();
+		var videoArray = [];
 		
-		objectStoreTips.openCursor().onsuccess = function(event) {
-		  var cursorTips = event.target.result;
+		objectStore.openCursor().onsuccess = function(event) {
+		  var cursor = event.target.result;
 		  console.log(cursorTips);
-		  if (cursorTips) {
-			var tipsData2 = new Object();
-			tipsData2.TopicID = cursorTips.value.TopicID;
-			tipsData2.Title = cursorTips.value.Title;
-			tipsData2.Contents = cursorTips.value.Contents;
-			tipsData2.PageType = cursorTips.value.PageType;
-			if(tipsData2.PageType=='VIDEOS'){
-				tipsArray.push(tipsData2);
+		  if (cursor) {
+			var videoData2 = new Object();
+			videoData2.TopicID = cursor.value.TopicID;
+			videoData2.Title = cursor.value.Title;
+			videoData2.Contents = cursor.value.Contents;
+			videoData2.PageType = cursor.value.PageType;
+			if(videoData2.PageType=='VIDEOS'){
+				videoArray.push(videoData2);
 			}
 			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
 			//var resultSet = objectStore.add({ TopicID: rec.TopicID, PageType: rec.PageType, Image: rec.Image, Title: rec.Title, Contents: rec.Contents});
-			cursorTips.continue();
+			cursor.continue();
 		  }
 		  else {
 			//alert("No more entries!");
-			tipsData.tips = tipsArray;
-			console.log(tipsData);
-			mainView.router.load({url:'modules/tips/videos.html',context:tipsData});
+			videoData.videos = videoArray;
+			console.log(videoData);
+			mainView.router.load({url:'modules/videos/videos.html',context:VideosData});
 		  }
 		};
 	}
 }
 
 function videosdetail(obj){
-	var idTips = obj.id; 
-	var requestTips = window.indexedDB.open("isaac", 1);
-	requestTips.onsuccess = function(e) {
-		var dbTips = this.result;
-		var objectStoreTips = dbTips.transaction("gentable").objectStore("gentable");
-		var TipsData = new Object();
+	var idVideos = obj.id; 
+	var requestVideos = window.indexedDB.open("isaac", 1);
+	requestVideos.onsuccess = function(e) {
+		var dbVideos = this.result;
+		var objectStoreVideos = dbVideos.transaction("gentable").objectStore("gentable");
+		var VideosData = new Object();
 		///var hwiArray = [];
 		
-		objectStoreTips.openCursor().onsuccess = function(event) {
-		  var cursorTips = event.target.result;
-		  if (cursorTips) {
-			if(cursorTips.value.TopicID==idTips){
-				var TipsData = new Object();
-				TipsData.TopicID = cursorTips.value.TopicID;
-				TipsData.Title = cursorTips.value.Title;
-				TipsData.Contents = cursorTips.value.Contents;
+		objectStoreVideos.openCursor().onsuccess = function(event) {
+		  var cursorVideos = event.target.result;
+		  if (cursorVideos) {
+			if(cursorVideos.value.TopicID==idVideos){
+				var VideosData = new Object();
+				VideosData.TopicID = cursorVideos.value.TopicID;
+				VideosData.Title = cursorVideos.value.Title;
+				VideosData.Contents = cursorVideos.value.Contents;
 				//hwiArray.push(hwiData2);
 				//hwiData.hardwareinformation = hwiArray;
-				mainView.router.load({url:'modules/tips/videosdetail.html',context:TipsData});	
+				mainView.router.load({url:'modules/videos/videosdetail.html',context:VideosData});	
 			}  
-			cursorTips.continue();
+			cursorVideos.continue();
 		  }
 		  else {
 			//alert("No more entries!");
 			//hwiData.hardwareinformation = hwiArray;
-			mainView.router.load({url:'modules/tips/videosdetail.html',context:TipsData});
+			mainView.router.load({url:'modules/videos/videosdetail.html',context:VideosData});
 		  }
 		};
 	}
