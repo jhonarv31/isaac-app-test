@@ -540,7 +540,7 @@ function mainVideos(){
 			tipsData2.Title = cursorTips.value.Title;
 			tipsData2.Contents = cursorTips.value.Contents;
 			tipsData2.PageType = cursorTips.value.PageType;
-			if(tipsData2.PageType=='TIPS'){
+			if(tipsData2.PageType=='VIDEOS'){
 				tipsArray.push(tipsData2);
 			}
 			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
