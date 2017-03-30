@@ -525,24 +525,30 @@ function tipsdetail(obj){
 
 function mainVideos(){
 	var request = window.indexedDB.open("isaac", 1);
+	var videoArray2 = [];
 	request.onsuccess = function(e) {
 		var db = this.result;
-		var objectStore = dbTips.transaction("gentable").objectStore("gentable");
+		var objectStore = db.transaction("gentable").objectStore("gentable");
 		var videoData = new Object();
 		var videoArray = [];
 		
 		objectStore.openCursor().onsuccess = function(event) {
 		  var cursor = event.target.result;
-		  console.log(cursorTips);
+		  console.log(cursor);
 		  if (cursor) {
 			var videoData2 = new Object();
 			videoData2.TopicID = cursor.value.TopicID;
 			videoData2.Title = cursor.value.Title;
 			videoData2.Contents = cursor.value.Contents;
 			videoData2.PageType = cursor.value.PageType;
+			var videoData3 = new Object();
+			if(cursor.value.Contents){
+				videoData3.html ="<iframe src="+cursor.value.Contents.replace("watch?v=", "embed/")+" frameborder='0'></iframe>";
+			}
+			videoData3.caption = cursor.value.Title;
 			if(videoData2.PageType=='VIDEOS'){
 				videoArray.push(videoData2);
-			}
+				videoArray2.push(videoData3);
 			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
 			//var resultSet = objectStore.add({ TopicID: rec.TopicID, PageType: rec.PageType, Image: rec.Image, Title: rec.Title, Contents: rec.Contents});
 			cursor.continue();
