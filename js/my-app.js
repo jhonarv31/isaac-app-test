@@ -540,7 +540,7 @@ function listofvideo(){
 			tipsData2.Title = cursorTips.value.Title;
 			tipsData2.Contents = cursorTips.value.Contents;
 			tipsData2.PageType = cursorTips.value.PageType;
-			if(tipsData2.PageType=='TIPS'){
+			if(tipsData2.PageType=='VIDEOS'){
 				tipsArray.push(tipsData2);
 			}
 			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
@@ -551,7 +551,7 @@ function listofvideo(){
 			//alert("No more entries!");
 			tipsData.tips = tipsArray;
 			console.log(tipsData);
-			mainView.router.load({url:'modules/videos/listofvideo.html',context:tipsData});
+			mainView.router.load({url:'modules/videos/videos.html',context:tipsData});
 		  }
 		};
 	}
