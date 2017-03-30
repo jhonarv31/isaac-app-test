@@ -541,11 +541,6 @@ function listofvideo(){
 			videoData2.Title = cursor.value.Title;
 			videoData2.Contents = cursor.value.Contents;
 			videoData2.PageType = cursor.value.PageType;
-			var videoData3 = new Object();
-			if(cursor.value.Contents){
-				videoData3.html ="<iframe src="+cursor.value.Contents.replace("watch?v=", "embed/")+" frameborder='0'></iframe>";
-			}
-			videoData3.caption = cursor.value.Title;
 			if(videoData2.PageType=='VIDEOS'){
 				videoArray.push(videoData2);
 				videoArray2.push(videoData3);
