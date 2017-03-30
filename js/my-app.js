@@ -523,133 +523,67 @@ function tipsdetail(obj){
 	}
 }
 
-function listofvideo(){
-	var request = window.indexedDB.open("isaac", 1);
-	var videoArray2 = [];
-	request.onsuccess = function(e) {
-		var db = this.result;
-		var objectStore = db.transaction("gentable").objectStore("gentable");
-		var videoData = new Object();
-		var videoArray = [];
+function mainVideos(){
+	var requestTips = window.indexedDB.open("isaac", 1);
+	requestTips.onsuccess = function(e) {
+		var dbTips = this.result;
+		var objectStoreTips = dbTips.transaction("gentable").objectStore("gentable");
+		var tipsData = new Object();
+		var tipsArray = [];
 		
-		objectStore.openCursor().onsuccess = function(event) {
-		  var cursor = event.target.result;
-		  console.log(cursor);
-		  if (cursor) {
-			var videoData2 = new Object();
-			videoData2.TopicID = cursor.value.TopicID;
-			videoData2.Title = cursor.value.Title;
-			videoData2.Contents = cursor.value.Contents;
-			videoData2.PageType = cursor.value.PageType;
-			if(videoData2.PageType=='VIDEOS'){
-				videoArray.push(videoData2);
-				videoArray2.push(videoData3);
+		objectStoreTips.openCursor().onsuccess = function(event) {
+		  var cursorTips = event.target.result;
+		  console.log(cursorTips);
+		  if (cursorTips) {
+			var tipsData2 = new Object();
+			tipsData2.TopicID = cursorTips.value.TopicID;
+			tipsData2.Title = cursorTips.value.Title;
+			tipsData2.Contents = cursorTips.value.Contents;
+			tipsData2.PageType = cursorTips.value.PageType;
+			if(tipsData2.PageType=='TIPS'){
+				tipsArray.push(tipsData2);
 			}
 			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
 			//var resultSet = objectStore.add({ TopicID: rec.TopicID, PageType: rec.PageType, Image: rec.Image, Title: rec.Title, Contents: rec.Contents});
-			cursor.continue();
+			cursorTips.continue();
 		  }
 		  else {
 			//alert("No more entries!");
 			tipsData.tips = tipsArray;
 			console.log(tipsData);
-			mainView.router.load({url:'modules/videos/videos.html',context:tipsData});
+			mainView.router.load({url:'modules/tips/videos.html',context:tipsData});
 		  }
 		};
 	}
-}
-function mainVideos(){
-	//mainView.router.loadPage('modules/videos/videos.html');
-	var request = window.indexedDB.open("isaac", 1);
-	var videoArray2 = [];
-	request.onsuccess = function(e) {
-		var db = this.result;
-		var objectStore = db.transaction("gentable").objectStore("gentable");
-		var videoData = new Object();
-		var videoArray = [];
-		
-		objectStore.openCursor().onsuccess = function(event) {
-		  var cursor = event.target.result;
-		  console.log(cursor);
-		  if (cursor) {
-			var videoData2 = new Object();
-			videoData2.TopicID = cursor.value.TopicID;
-			videoData2.Title = cursor.value.Title;
-			videoData2.Contents = cursor.value.Contents;
-			videoData2.PageType = cursor.value.PageType;
-			var videoData3 = new Object();
-			if(cursor.value.Contents){
-				videoData3.html ="<iframe src="+cursor.value.Contents.replace("watch?v=", "embed/")+" frameborder='0'></iframe>";
-			}
-			videoData3.caption = cursor.value.Title;
-			if(videoData2.PageType=='VIDEOS'){
-				videoArray.push(videoData2);
-				videoArray2.push(videoData3);
-			}
-			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
-			//var resultSet = objectStore.add({ TopicID: rec.TopicID, PageType: rec.PageType, Image: rec.Image, Title: rec.Title, Contents: rec.Contents});
-			cursor.continue();
-		  }
-		  else {
-			//alert("No more entries!");
-			videoData.videos = videoArray;
-			console.log(videoData);
-				var myPhotoBrowserPopupDark = myApp.photoBrowser({
-				photos : videoArray2,
-				/*photos: [{
-					html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0?list=PLpj0FBQgLGEr3mtZ5BTwtmSwF1dkPrPRM" frameborder="0"></iframe>',
-					caption: 'Woodkid - Run Boy Run (Official HD Video)'
-				},
-				{
-					url: 'http://lorempixel.com/1024/1024/sports/2/',
-					caption: 'Second Caption Text'
-				},
-				{
-					url: 'http://lorempixel.com/1024/1024/sports/3/'
-				}],*/
-				theme: 'dark',
-				type: 'standalone'
-				});
-				//$$('.pb-standalone-video').on('click', function () {
-					myPhotoBrowserPopupDark.open();
-				//});
-			//mainView.router.load({url:'modules/videos/videos.html',context:videoData});
-		  }
-		};
-	}
-
-	
-	
 }
 
 function videosdetail(obj){
-	alert("hey!");
-	var idVideos = obj.id; 
-	var requestVideos = window.indexedDB.open("isaac", 1);
-	requestVideos.onsuccess = function(e) {
-		var dbVideos = this.result;
-		var objectStoreVideos = dbVideos.transaction("gentable").objectStore("gentable");
-		var VideosData = new Object();
+	var idTips = obj.id; 
+	var requestTips = window.indexedDB.open("isaac", 1);
+	requestTips.onsuccess = function(e) {
+		var dbTips = this.result;
+		var objectStoreTips = dbTips.transaction("gentable").objectStore("gentable");
+		var TipsData = new Object();
 		///var hwiArray = [];
 		
-		objectStoreVideos.openCursor().onsuccess = function(event) {
-		  var cursorVideos = event.target.result;
-		  if (cursorVideos) {
-			if(cursorVideos.value.TopicID==idVideos){
-				var VideosData = new Object();
-				VideosData.TopicID = cursorVideos.value.TopicID;
-				VideosData.Title = cursorVideos.value.Title;
-				VideosData.Contents = cursorVideos.value.Contents;
+		objectStoreTips.openCursor().onsuccess = function(event) {
+		  var cursorTips = event.target.result;
+		  if (cursorTips) {
+			if(cursorTips.value.TopicID==idTips){
+				var TipsData = new Object();
+				TipsData.TopicID = cursorTips.value.TopicID;
+				TipsData.Title = cursorTips.value.Title;
+				TipsData.Contents = cursorTips.value.Contents;
 				//hwiArray.push(hwiData2);
 				//hwiData.hardwareinformation = hwiArray;
-				mainView.router.load({url:'modules/videos/videosdetail.html',context:VideosData});	
+				mainView.router.load({url:'modules/tips/videosdetail.html',context:TipsData});	
 			}  
-			cursorVideos.continue();
+			cursorTips.continue();
 		  }
 		  else {
 			//alert("No more entries!");
 			//hwiData.hardwareinformation = hwiArray;
-			mainView.router.load({url:'modules/videos/videosdetail.html',context:VideosData});
+			mainView.router.load({url:'modules/tips/videosdetail.html',context:TipsData});
 		  }
 		};
 	}
