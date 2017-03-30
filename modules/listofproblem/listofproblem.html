@@ -1,0 +1,62 @@
+
+<div class="pages">
+  <div data-page="listofproblem" class="page">
+	<div class="navbar">
+	  <div class="navbar-inner">
+		<div class="left sliding"><a href="#" class="link icon-only open-panel"> <i class="fa fa-bars"></i></a></div>
+		<div class="center sliding">List of Basic Problem</div>
+	  </div>
+	</div>
+    <div class="page-content">
+      <div class="list-block accordion-list">
+        <ul style="background: #878787; padding: 5px;">{{#each listofproblem}}
+          <li class="accordion-item">
+            <a id="{{TopicID}}_Category" href="#" class="item-content item-link" onclick='listofproblemdetail1(this)' style="color:#fff;"><!--onclick='listofproblemdetail(this)' -->
+              <div class="item-inner">
+                <div class="item-title">{{Category}}</div>
+              </div>
+            </a>
+			<div class="accordion-item-content">
+				<div class="list-block accordion-list">
+					<ul style="width:95%; margin:auto;">{{#each this.categorydetaillist}}
+					  <li class="accordion-item">
+						<a id="{{TopicID}}_CategoryDetail" href="#" class="item-content item-link" onclick='listofproblemdetail1(this)'>
+						  <div class="item-inner">
+							<div class="item-title">{{Title}}</div>
+						  </div>
+						</a>
+						<div class="accordion-item-content">
+							<div class="list-block">
+								<ul style="width:90%; margin:auto; background: #878787;">{{#each this.detaillist}}
+									<li>
+									<!--<a id="{{SeqID}}_Detail" href="#" class="item-content item-link" onclick='listofproblemdetail1(this)'>
+									  <div class="item-inner">
+										<div class="item-title" style="color:#fff;">{{Count}}. {{Description}}</div>
+									  </div>
+									</a>
+									<div class="accordion-item-content">-->
+										<div class="content-block" style="color:#fff;">
+											{{Count}}. {{Description}}<br/>
+											{{ImageBlobDisplay}}
+										</div>
+									<!--</div>-->
+									</li>{{/each}}
+								</ul>
+								<center><a id={{TopicID}} href="#" onclick="listofproblemdetail(this)"> See More </a></center>
+							</div>
+					  </li>{{/each}}
+					</ul>
+				</div>
+			</div>
+          </li>{{/each}}
+        </ul>
+      </div>
+    </div>
+	<!-- Bottom Toolbar-->
+	<div class="toolbar">
+	  <div class="toolbar-inner">
+		 <a href="#" class="back link"><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i><span>Back</span></a>
+	  </div>
+	</div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="pages">
+  <div data-page="hardwareinformationdetail" class="page">
+	<div class="navbar">
+	  <div class="navbar-inner">
+		<div class="left sliding"><a href="#" class="link icon-only open-panel"> <i class="fa fa-bars"></i></a></div>
+		<div class="center sliding">Hardware Information</div>
+	  </div>
+	</div>
+    <div class="page-content">
+      <div class="content-block">
+		<h3>{{Title}}</h3>
+		<div class="content-block-inner">
+		  {{ImageBlobDisplay}}
+		  <div class="list-block accordion-list">
+			<ul style="background: #878787;">
+				<li class="accordion-item">
+					<a id='{{TopicID}}_Description' href="#" class="item-content item-link" onclick='hardwareinfodetail1(this)' style="color:#fff;">
+						<div class="item-inner">
+							<div class="item-title">Description</div>
+						</div>
+					</a>
+					<div class="accordion-item-content">
+						<div class="content-block">
+<p style="padding:10px; text-align:justify; white-space:pre-wrap; text-indent:10px; color:#fff;">
+{{Contents}}
+</p>
+						</div>
+					</div>
+				</li>
+				<li class="accordion-item">
+					<a id='{{TopicID}}_Specifications' href="#" class="item-content item-link" onclick='hardwareinfodetail1(this)' style="color:#fff;">
+						<div class="item-inner">
+							<div class="item-title">Specifications</div>
+						</div>
+					</a>
+					<div class="accordion-item-content">
+						<div class="content-block">
+<p style="padding:10px; text-align:justify; white-space:pre-wrap; color:#fff;">
+{{Contents2}}
+</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		  </div>
+		</div>
+      </div>
+    </div>
+	<!-- Bottom Toolbar-->
+	<div class="toolbar">
+	  <div class="toolbar-inner">
+		 <a href="#" class="back link"><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i><span>Back</span></a>
+	  </div>
+	</div>
+  </div>
+</div>

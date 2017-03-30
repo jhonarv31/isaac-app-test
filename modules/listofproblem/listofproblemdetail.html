@@ -1,0 +1,40 @@
+<div class="pages">
+  <div data-page="listofproblemdetail" class="page">
+	<div class="navbar">
+	  <div class="navbar-inner">
+		<div class="left sliding"><a href="#" class="link icon-only open-panel"> <i class="fa fa-bars"></i></a></div>
+		<div class="center sliding">List of Problem</div>
+	  </div>
+	</div>
+    <div class="page-content">
+     <div class="content-block">
+		<h3>{{Title}}</h3>
+		<div class="content-block-inner" style="padding-top:0px;">
+		  <div class="list-block" style="margin-top:0px; border-top:none;">
+				<ul style="width:90%; margin:auto;">{{#each detaillist}}
+					<li>
+					<!--<a id="{{SeqID}}_Detail" href="#" class="item-content item-link" onclick='listofproblemdetail1(this)'>
+					  <div class="item-inner">
+						<div class="item-title" style="color:#fff;">{{Count}}. {{Description}}</div>
+					  </div>
+					</a>
+					<div class="accordion-item-content">-->
+						<div>
+							{{Count}}. {{Description}}<br/>
+							{{ImageBlobDisplay}}
+						</div>
+					<!--</div>-->
+					</li>{{/each}}
+				</ul>
+			</div>
+		</div>
+	  </div>
+    </div>
+	<!-- Bottom Toolbar-->
+	<div class="toolbar">
+	  <div class="toolbar-inner">
+		 <a href="#" class="back link"><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i><span>Back</span></a>
+	  </div>
+	</div>
+  </div>
+</div>
