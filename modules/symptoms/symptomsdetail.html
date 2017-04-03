@@ -8,13 +8,22 @@
 	</div>
     <div class="page-content">
       <div class="content-block">
-        <div class="content-block-inner">
-          <h3>{{SymptomDesc}}</h3>
-		  <hr style="width:90%; alignment:center;">
-		  <h4>{{StepDesc}}</h4>
+	    <div class="content-block-inner">
+	     <h3>{{SymptomDesc}}</h3>
+		 <div class="list-block">
+			<ul>{{#each symptomsList}}
+			  <li>
+				  <div class="item-inner">
+					<div class="item-title" style="white-space:normal;max-width:80%;">{{this.StepDesc}}</div>
+					<div class="item-title" style="white-space:normal;">{{this.Text}}</div>
+				  </div>
+			  </li>{{/each}}
+			</ul>
+		  </div>
+		  <!--<h5>{{StepDesc}}</h5>-->
           <ul class="symptomsList" style="list-style:none; display:inline-block; width:100%;">
 			<div id="checkMe">
-				<li><a id={{YesStepID}} href="#" class="item-content item-link symptomsButton1" onclick='symptomsdetail(this)' onload='checkMe(this)'>{{YesStepText}}</a></li>
+				<li><a id={{YesStepID}} href="#" class="item-content item-link symptomsButton1" onclick='symptomsdetail(this)'>{{YesStepText}}</a></li>
 				<li><a id={{NoStepID}} href="#" class="item-content item-link symptomsButton2" onclick='symptomsdetail(this)'>{{NoStepText}}</a></li>
 			</div>
 		  </ul>
@@ -24,7 +33,7 @@
 	<!-- Bottom Toolbar-->
 	<div class="toolbar">
 	  <div class="toolbar-inner">
-		 <a href="#" class="back link"><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i><span>Back</span></a>
+		 <a href="#" class="back link"><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i><span>Back to Symptoms</span></a>
 	  </div>
 	</div>
   </div>

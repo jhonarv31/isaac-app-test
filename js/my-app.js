@@ -5,7 +5,12 @@ Template7.registerHelper('json_stringify', function (context) {
 
 // Export selectors engine
 var $$ = Dom7;
-var SERVER_ADDRESS = "http://198.38.85.53:8080/isaac";
+var SERVER_ADDRESS = "http://192.168.173.67:8080/isaac";
+var symptomDetailList = [];
+var symptomDetailListAns = [];
+var combinedSympListAns = [];
+
+
 
 function hideSplash(){
 	document.getElementById("splash").style.display="none";
@@ -101,7 +106,8 @@ var myApp = new Framework7({
 var mainView = myApp.addView('.view-main', {
     // Enable dynamic Navbar
     dynamicNavbar: false,
-	domCache: true
+	domCache: true,
+	uniqueHistory: true
 });
 
 myApp.init();
@@ -400,6 +406,25 @@ function mainSymptoms(){
 
 function symptomsdetail(obj){
 	var id = obj.id; 
+	var classList = obj.className;
+	
+	if(classList.indexOf("head")!=-1){
+		/*for (var i = 0; i < obj.childNodes.length; i++) {
+			if (obj.childNodes[i].className.indexOf("item-title")!=-1) {
+			  symptomDetailList.push(obj.childNodes[i].text);
+			  break;
+			}        
+		}*/
+	}else if(classList.indexOf("symptomsButton1")!=-1){
+		var answer = new Object();
+		answer.Text = obj.text;
+		symptomDetailListAns.push(answer);
+	}else if(classList.indexOf("symptomsButton2")!=-1){
+		var answer = new Object();
+		answer.Text = obj.text;
+		symptomDetailListAns.push(answer);
+	}
+	
 	var request = window.indexedDB.open("isaac", 1);
 	request.onsuccess = function(e) {
 		var db = this.result;
@@ -420,20 +445,35 @@ function symptomsdetail(obj){
 				sympData.NoStepText = cursor.value.NoStepText;
 				sympData.IsHead = cursor.value.IsHead;
 				sympData.IsLeaf = cursor.value.IsLeaf;
-				mainView.router.load({url:'modules/symptoms/symptomsdetail.html',context:sympData});
+				//sympData.symptomsList = symptomDetailList;
+				symptomDetailList.push(sympData);
+				for(var x=0; x<symptomDetailListAns.length;x++){
+					symptomDetailList[x].Text = symptomDetailListAns[x].Text;		
+				}
 				
+				sympData.symptomsList = symptomDetailList
+				mainView.router.load({url:'modules/symptoms/symptomsdetail.html',context:sympData, force:true, ignoreCache:true});
 			}  
 			cursor.continue();
 		  }
 		  else {
 			//alert("No more entries!");
 			//hwiData.hardwareinformation = hwiArray;
-			mainView.router.load({url:'modules/symptoms/symptomsdetail.html',context:sympData});
+			//mainView.router.load({url:'modules/symptoms/symptomsdetail.html',context:sympData});
+			mainView.router.back();
 		  }
 		};
 	}
-}
+	
+	console.log(symptomDetailList);
+	console.log(symptomDetailListAns);
 
+}
+myApp.onPageAfterAnimation("symptoms", function(page){
+	symptomDetailList = [];
+	symptomDetailListAns = [];
+	combinedSympListAns = [];
+}); 
 
 myApp.onPageAfterAnimation("symptomsdetail", function(page){
 	var yes = $$(".symptomsButton1")[$$(".symptomsButton1").length-1];
@@ -522,39 +562,7 @@ function tipsdetail(obj){
 		};
 	}
 }
-function listVideos(){
-	var requestTips = window.indexedDB.open("isaac", 1);
-	requestTips.onsuccess = function(e) {
-		var dbTips = this.result;
-		var objectStoreTips = dbTips.transaction("gentable").objectStore("gentable");
-		var tipsData = new Object();
-		var tipsArray = [];
-		
-		objectStoreTips.openCursor().onsuccess = function(event) {
-		  var cursorTips = event.target.result;
-		  console.log(cursorTips);
-		  if (cursorTips) {
-			var tipsData2 = new Object();
-			tipsData2.TopicID = cursorTips.value.TopicID;
-			tipsData2.Title = cursorTips.value.Title;
-			tipsData2.Contents = cursorTips.value.Contents;
-			tipsData2.PageType = cursorTips.value.PageType;
-			if(tipsData2.PageType=='VIDEOS'){
-				tipsArray.push(tipsData2);
-			}
-			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
-			//var resultSet = objectStore.add({ TopicID: rec.TopicID, PageType: rec.PageType, Image: rec.Image, Title: rec.Title, Contents: rec.Contents});
-			cursorTips.continue();
-		  }
-		  else {
-			//alert("No more entries!");
-			tipsData.videos = tipsArray;
-			console.log(tipsData);
-			mainView.router.load({url:'modules/videos/videos.html',context:tipsData});
-		  }
-		};
-	}
-}
+
 function mainVideos(){
 	//mainView.router.loadPage('modules/videos/videos.html');
 	var request = window.indexedDB.open("isaac", 1);
