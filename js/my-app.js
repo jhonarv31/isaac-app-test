@@ -563,6 +563,39 @@ function tipsdetail(obj){
 	}
 }
 
+function listVideos(){
+	var requestTips = window.indexedDB.open("isaac", 1);
+	requestTips.onsuccess = function(e) {
+		var dbTips = this.result;
+		var objectStoreTips = dbTips.transaction("gentable").objectStore("gentable");
+		var tipsData = new Object();
+		var tipsArray = [];
+		
+		objectStoreTips.openCursor().onsuccess = function(event) {
+		  var cursorTips = event.target.result;
+		  console.log(cursorTips);
+		  if (cursorTips) {
+			var tipsData2 = new Object();
+			tipsData2.TopicID = cursorTips.value.TopicID;
+			tipsData2.Title = cursorTips.value.Title;
+			tipsData2.Contents = cursorTips.value.Contents;
+			tipsData2.PageType = cursorTips.value.PageType;
+			if(tipsData2.PageType=='VIDEOS'){
+				tipsArray.push(tipsData2);
+			}
+			//alert("TopicID: " + cursor.value.TopicID + ", Title:  " + cursor.value.Title+ ", Contents:  " + cursor.value.Contents);
+			//var resultSet = objectStore.add({ TopicID: rec.TopicID, PageType: rec.PageType, Image: rec.Image, Title: rec.Title, Contents: rec.Contents});
+			cursorTips.continue();
+		  }
+		  else {
+			//alert("No more entries!");
+			tipsData.videos = tipsArray;
+			console.log(tipsData);
+			mainView.router.load({url:'modules/videos/videos.html',context:tipsData});
+		  }
+		};
+	}
+}
 function mainVideos(){
 	//mainView.router.loadPage('modules/videos/videos.html');
 	var request = window.indexedDB.open("isaac", 1);
@@ -623,8 +656,6 @@ function mainVideos(){
 		};
 	}
 
-	
-	
 }
 
 function videosdetail(obj){
@@ -659,7 +690,8 @@ function videosdetail(obj){
 		};
 	}
 }
-
+	
+	
 function updateLocalDB(){
 	myApp.alert('Update Local DB','Notice');
 	
